@@ -1,22 +1,32 @@
 # -*- coding: utf-8 -*-
 """
     7-5
-    添加用户登入时间记录
+    添加用户登入时间记录,用户名不区分大小写,不带特殊字符
+    cdg三问未完成，cd之后完成
     注：
     1，当前时间的合理字符串输出 time.strftime()
     2，删除字典中某个值，dictionary.pop(key)
+    3，字符数字集合，string.ascii_letters,string.digits
+    4，python 没有goto语句，要跳出多重循环的话可以写个函数，然后用return直接跳出
     
 """
 
 from time import strftime,localtime
+import string
 
 db={}
 db_time={}
+character=string.ascii_letters+string.digits
+
 
 def newuser():
     prompt='login desired:'
     while True:
-        name=raw_input(prompt)
+        name=raw_input(prompt).lower()
+        for char in name:
+            if char not in character:
+                print 'name can\'t hava a special letter!'
+                return 
         if db.has_key(name):
             prompt='name taken, try another:'
             continue
@@ -26,8 +36,9 @@ def newuser():
     db[name]=pwd
     db_time[name]=strftime("%a,%d %b %Y %H:%M:%S",localtime())
     
+    
 def olduser():
-    name=raw_input('login:')
+    name=raw_input('login:').lower()
     pwd=raw_input('passwd:')
     passwd=db.get(name)
     if passwd == pwd:
@@ -38,7 +49,7 @@ def olduser():
         print 'login incorrect'
 
 def deleteuser():
-    name=raw_input('which user you want to delete:')
+    name=raw_input('which user you want to delete:').lower()
     if db.has_key(name):
         db.pop(name)
         db_time.pop(name)
