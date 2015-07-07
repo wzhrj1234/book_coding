@@ -1,7 +1,0 @@
-""""
-    Dynamic connectivity
-    
-""""
-
-class UF():
-    
